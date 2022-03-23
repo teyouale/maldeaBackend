@@ -3,3 +3,6 @@ obj/
 /packages/
 riderModule.iml
 /_ReSharper.Caches/
+/.idea/.idea.maldeaBackend/.idea/httpRequests/http-client.cookies
+/.idea/.idea.maldeaBackend/.idea/httpRequests/http-requests-log.http
+/.idea/.idea.maldeaBackend/.idea/workspace.xml
