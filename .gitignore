@@ -6,3 +6,7 @@ riderModule.iml
 /.idea/.idea.maldeaBackend/.idea/httpRequests/http-client.cookies
 /.idea/.idea.maldeaBackend/.idea/httpRequests/http-requests-log.http
 /.idea/.idea.maldeaBackend/.idea/workspace.xml
+/Migrations/20220323185311_InitialCreate.cs
+/Migrations/20220323185311_InitialCreate.Designer.cs
+/Migrations/DataContextModelSnapshot.cs
+/Migrations/
