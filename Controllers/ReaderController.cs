@@ -1,3 +1,4 @@
+using maldeaBackend.Dtos;
 using maldeaBackend.Models;
 using maldeaBackend.Service;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +22,7 @@ public class ReaderController:ControllerBase
         return Ok(_readerService.GetAllReader());
     }   
     [HttpPost]
-    public  IActionResult RegisterReader(Reader newreader)
+    public  IActionResult RegisterReader(ReaderDto newreader)
     {
         return Ok(_readerService.RegisterReader(newreader));
     }
