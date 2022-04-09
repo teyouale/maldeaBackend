@@ -1,6 +1,7 @@
 using maldeaBackend.Dtos;
 using maldeaBackend.Models;
 using maldeaBackend.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace maldeaBackend.Controllers;
@@ -21,6 +22,8 @@ public class ReaderController:ControllerBase
     {
         return Ok(await  _readerService.GetAllReader());
     }   
+    // [Authorize]
+    // [AllowAnonymous]
     [HttpPost]
     public  async Task<IActionResult> RegisterReader(ReaderDto newreader)
     {
