@@ -1,9 +1,7 @@
 namespace maldeaBackend.Dtos;
 
-public class ReaderDto
+public class ReaderDto:UserDto
 {
-        public string userName { get; set; } = "tyouale";
-        public string password { get; set; } = "123";
         public string phoneNumber { get; set; } = "0938069240";
         public string firstName { get; set; } = "Eyouale";
         public string lastName { get; set; } = "Tensae";

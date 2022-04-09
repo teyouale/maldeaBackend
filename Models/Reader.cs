@@ -1,11 +1,12 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace maldeaBackend.Models;
 
-public class Reader
+[Table("Reader")]
+public class Reader : User
 {
     // Remove the Default Value
-    public int Id { get; set; } = 1;
-    public string userName { get; set; } = "tyouale";
-    public string password { get; set; } = "123";
+    // public int Id { get; set; } = 1;
     public string phoneNumber { get; set; } = "0938069240";
     public string firstName { get; set; } = "Eyouale";
     public string lastName { get; set; } = "Tensae";

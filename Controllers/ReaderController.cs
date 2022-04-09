@@ -17,20 +17,20 @@ public class ReaderController:ControllerBase
         _readerService = readerService;
     }
     [HttpGet]
-    public IActionResult GetAllReader()
+    public async Task<IActionResult> GetAllReader()
     {
-        return Ok(_readerService.GetAllReader());
+        return Ok(await  _readerService.GetAllReader());
     }   
     [HttpPost]
-    public  IActionResult RegisterReader(ReaderDto newreader)
+    public  async Task<IActionResult> RegisterReader(ReaderDto newreader)
     {
-        return Ok(_readerService.RegisterReader(newreader));
+        return Ok(await _readerService.RegisterReader(newreader));
     }
 
     [HttpGet("{id}")]
-    public IActionResult GetReader(int id)
+    public async Task<IActionResult> GetReader(int id)
     {
-        return Ok(_readerService.GetReaderById(id));
+        return Ok( await _readerService.GetReaderById(id));
     }
 
    

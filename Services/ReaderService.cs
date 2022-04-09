@@ -2,6 +2,7 @@ using AutoMapper;
 using maldeaBackend.Data;
 using maldeaBackend.Dtos;
 using maldeaBackend.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace maldeaBackend.Service;
 
@@ -15,19 +16,12 @@ public class ReaderService : IReaderService
         _mapper = mapper;
     }
 
-    private static List<Reader> readers = new List<Reader> {new Reader()};
 
     public async Task<ServiceResponse<List<ReaderDto>>> GetAllReader()
     {
         ServiceResponse<List<ReaderDto>> serviceResponse = new ServiceResponse<List<ReaderDto>>();
-        try
-        {
-            serviceResponse.Data = (readers.Select(c => _mapper.Map<ReaderDto>(c))).ToList();
-        }  catch (Exception ex)
-        {
-            serviceResponse.Success = false;
-            serviceResponse.Message = ex.Message;
-        }
+            List<Reader> dbReaders = await _context.Readers.ToListAsync();
+            serviceResponse.Data = (dbReaders.Select(c => _mapper.Map<ReaderDto>(c))).ToList();
         return serviceResponse;
         
     }
@@ -36,7 +30,8 @@ public class ReaderService : IReaderService
     {
         ServiceResponse<ReaderDto> serviceResponse = new ServiceResponse<ReaderDto>();
         try{
-            serviceResponse.Data = _mapper.Map<ReaderDto>(readers.FirstOrDefault(c => c.Id == id));
+            Reader dbReader = await _context.Readers.FirstOrDefaultAsync(c => c.Id == id);
+            serviceResponse.Data = _mapper.Map<ReaderDto>(dbReader);
         }
         catch (Exception ex)
         {
@@ -49,20 +44,11 @@ public class ReaderService : IReaderService
     public async Task<ServiceResponse<List<ReaderDto>>> RegisterReader(ReaderDto newReader)
     {
         ServiceResponse<List<ReaderDto>> serviceResponse = new ServiceResponse<List<ReaderDto>>();
-        try
-        {
             // Reader
             Reader reader = _mapper.Map<Reader>(newReader);
-            reader.Id = readers.Max(c => c.Id) + 1;
-            readers.Add(reader);
-            serviceResponse.Data = (readers.Select(c => _mapper.Map<ReaderDto>(c))).ToList();
-        }
-        catch (Exception ex)
-        {
-            serviceResponse.Success = false;
-            serviceResponse.Message = ex.Message;
-        }
-
+            await _context.Readers.AddAsync(reader);
+            await _context.SaveChangesAsync();
+            serviceResponse.Data = (_context.Readers.Select(c => _mapper.Map<ReaderDto>(c))).ToList();
         return serviceResponse;
 
     }

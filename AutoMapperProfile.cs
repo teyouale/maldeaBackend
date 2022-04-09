@@ -8,9 +8,12 @@ public class AutoMapperProfile : Profile
 {
     public AutoMapperProfile()
     {
-        CreateMap<Reader, ReaderDto>();
+        // CreateMap<User, UserDto>().Include<Reader,ReaderDto>().ReverseMap();
+        CreateMap<User, UserRegisterDto>().Include<Reader,ReaderRegisterDto>().ReverseMap();
         // it for Register Mapping
-        CreateMap<ReaderDto, Reader>();
+        CreateMap<Reader, ReaderDto>().ReverseMap();
+        CreateMap<Reader, ReaderRegisterDto>().ReverseMap();
+        CreateMap<User, UserLoginDto>().ReverseMap();
     }
     
 }
