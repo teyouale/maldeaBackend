@@ -12,4 +12,6 @@ public class DataContext:DbContext
     
     public DbSet<Reader> Readers { get; set; }
     public DbSet<User> Users { get; set; }
+    
+    public DbSet<History> History { get; set; }
 }

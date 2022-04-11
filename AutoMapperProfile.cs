@@ -14,6 +14,7 @@ public class AutoMapperProfile : Profile
         CreateMap<Reader, ReaderDto>().ReverseMap();
         CreateMap<Reader, ReaderRegisterDto>().ReverseMap();
         CreateMap<User, UserLoginDto>().ReverseMap();
+        CreateMap<History, HistoryGetDto>().ReverseMap();
     }
     
 }

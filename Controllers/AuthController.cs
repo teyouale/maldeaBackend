@@ -15,10 +15,11 @@ public class AuthController : ControllerBase
     {
         _authRepository = authRepository;
     }
-    [HttpPost("Register")]
+    
+    [HttpPost("CRegister")]
     public async Task<IActionResult> Register(ReaderRegisterDto request)
     {
-        ServiceResponse<int> response = await _authRepository.Register(
+        ServiceResponse<int> response = await _authRepository.CRegister(
             request, request.password);
         if(!response.Success) {
             return BadRequest(response);

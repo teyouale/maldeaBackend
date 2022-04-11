@@ -12,6 +12,8 @@ public class Reader : User
     public string lastName { get; set; } = "Tensae";
     public string address { get; set; } ="Tensae";
     public string email { get; set; }="Tensae";
+
+    public List<History> Histories { get; set; }
     // TODO Image Attribute
     // public string profileImage { get; set; }
     // TODO  Subscriptions Model

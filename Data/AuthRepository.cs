@@ -15,11 +15,14 @@ public class AuthRepository : IAuthRepository
     private readonly DataContext _context;
     private readonly IMapper _mapper;
     private readonly IConfiguration _configuration;
-    public AuthRepository(IMapper mapper,DataContext context,IConfiguration configuration)
+    private readonly ILogger _logger;
+
+    public AuthRepository(IMapper mapper,DataContext context,IConfiguration configuration,ILogger<AuthRepository> logger)
     {
         _context = context;
         _mapper = mapper;
         _configuration = configuration;
+        _logger = logger;
     }
 
     private string CreateToken(User user)
@@ -27,7 +30,8 @@ public class AuthRepository : IAuthRepository
         List<Claim> claims = new List<Claim>
         {
             new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()),
-            new Claim(ClaimTypes.Name,user.username)
+            new Claim(ClaimTypes.Name,user.username),
+            new Claim(ClaimTypes.Role,user.Role.ToString()),
         };
         SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8
             .GetBytes(_configuration.GetSection("AppSettings:Token").Value));
@@ -43,9 +47,11 @@ public class AuthRepository : IAuthRepository
         return tokenHandler.WriteToken(token);
     }
 
-    public async Task<ServiceResponse<int>> Register(ReaderRegisterDto userReaderRegisterDto, string password)
+    public async Task<ServiceResponse<int>> CRegister(ReaderRegisterDto userReaderRegisterDto, string password)
     {
         Reader user = _mapper.Map<Reader>(userReaderRegisterDto);
+        user.Role = RoleClass.user;
+        // _logger.LogInformation(Newtonsoft.Json.JsonConvert.SerializeObject(user));
         ServiceResponse<int> response = new ServiceResponse<int>();
         if (await UserExists(user.username))
         {
