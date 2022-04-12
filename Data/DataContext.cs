@@ -10,6 +10,7 @@ public class DataContext:DbContext
     {
     }
     
+    public DbSet<Company> Companys { get; set; }
     public DbSet<Reader> Readers { get; set; }
     public DbSet<User> Users { get; set; }
     

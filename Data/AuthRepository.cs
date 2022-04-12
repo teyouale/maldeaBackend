@@ -4,6 +4,7 @@ using System.Security.Claims;
 using System.Text;
 using AutoMapper;
 using maldeaBackend.Dtos;
+using maldeaBackend.Dtos.Company;
 using maldeaBackend.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -47,7 +48,7 @@ public class AuthRepository : IAuthRepository
         return tokenHandler.WriteToken(token);
     }
 
-    public async Task<ServiceResponse<int>> CRegister(ReaderRegisterDto userReaderRegisterDto, string password)
+    public async Task<ServiceResponse<int>> RRegister(ReaderRegisterDto userReaderRegisterDto, string password)
     {
         Reader user = _mapper.Map<Reader>(userReaderRegisterDto);
         user.Role = RoleClass.user;
@@ -66,6 +67,29 @@ public class AuthRepository : IAuthRepository
         await _context.Readers.AddAsync(user);
         await _context.SaveChangesAsync();
         response.Data = user.Id;
+        return response;
+    }
+
+    public async Task<ServiceResponse<int>> CRegister(CompanyRegisterDto companyRegisterDto, string password)
+    {
+        // throw new NotImplementedException();
+        Company company = _mapper.Map<Company>(companyRegisterDto);
+        company.Role = RoleClass.company;
+        // _logger.LogInformation(Newtonsoft.Json.JsonConvert.SerializeObject(user));
+        ServiceResponse<int> response = new ServiceResponse<int>();
+        if (await UserExists(company.username))
+        {
+            response.Success = false;
+            response.Message = "User already exists.";
+            return response;
+        }
+        
+        CreatePasswordHash(password, out byte[] passwordHash, out byte[] passwordSalt);
+        company.passwordHash = passwordHash;
+        company.passwordSalt = passwordSalt;
+        await _context.Companys.AddAsync(company);
+        await _context.SaveChangesAsync();
+        response.Data = company.Id;
         return response;
     }
 
