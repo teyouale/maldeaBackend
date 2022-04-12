@@ -18,6 +18,7 @@ public class ReaderController:ControllerBase
         _readerService = readerService;
     }
     [HttpGet]
+    [Authorize(Roles="company")]
     public async Task<IActionResult> GetAllReader()
     {
         return Ok(await  _readerService.GetAllReader());
