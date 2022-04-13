@@ -1,6 +1,8 @@
 using System.Text;
 using maldeaBackend.Data;
 using maldeaBackend.Service;
+using maldeaBackend.Services;
+using maldeaBackend.Services.ArticlesServices;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -35,6 +37,7 @@ builder.Host.ConfigureLogging(logging =>
 builder.Services.AddScoped<IReaderService, ReaderService>();
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<IHistoryService, HistoryService>();
+builder.Services.AddScoped<IArticlesService, ArticlesService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
