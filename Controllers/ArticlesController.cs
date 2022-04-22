@@ -1,5 +1,6 @@
 using AutoMapper;
 using maldeaBackend.Data;
+using maldeaBackend.Dtos.Article;
 using maldeaBackend.Models;
 using maldeaBackend.Services.ArticlesServices;
 using Microsoft.AspNetCore.Authorization;
@@ -25,7 +26,8 @@ public class ArticlesController : ControllerBase
     }
     
     [HttpPost]
-    public async Task<ActionResult> CreateArticle(Article article)
+    [Authorize(Roles="company")]
+    public async Task<ActionResult> CreateArticle(RegsterArticles article)
     {
         return Ok(await _articlesService.CreateArticle(article));
     }

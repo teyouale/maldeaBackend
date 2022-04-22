@@ -1,5 +1,6 @@
 using AutoMapper;
 using maldeaBackend.Dtos;
+using maldeaBackend.Dtos.Article;
 using maldeaBackend.Dtos.Company;
 using maldeaBackend.Models;
 
@@ -18,6 +19,7 @@ public class AutoMapperProfile : Profile
         CreateMap<Reader, ReaderRegisterDto>().ReverseMap();
         CreateMap<User, UserLoginDto>().ReverseMap();
         CreateMap<History, HistoryGetDto>().ReverseMap();
+        CreateMap<Article, RegsterArticles>().ReverseMap();
     }
     
 }

@@ -1,5 +1,7 @@
+using System.Security.Claims;
 using AutoMapper;
 using maldeaBackend.Data;
+using maldeaBackend.Dtos.Article;
 using maldeaBackend.Models;
 using maldeaBackend.Services.ArticlesServices;
 using Microsoft.EntityFrameworkCore;
@@ -11,13 +13,18 @@ public class ArticlesService : IArticlesService
     private readonly DataContext _context;
     private readonly IMapper _mapper;
     private readonly ILogger _logger;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public ArticlesService(IMapper mapper, DataContext context, ILogger<ArticlesService> logger)
+    public ArticlesService(IMapper mapper, DataContext context, ILogger<ArticlesService> logger,IHttpContextAccessor httpContextAccessor)
     {
         _context = context;
         _mapper = mapper;
         _logger = logger;
+        _httpContextAccessor = httpContextAccessor;
     }
+    
+    private int GetUserId() => int.Parse(_httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+
 
     // TODO replace userid -> Newspaper id 
     public async Task<ServiceResponse<List<Article>>> GetAllArticles(int id)
@@ -28,10 +35,12 @@ public class ArticlesService : IArticlesService
         return serviceResponse;
     }
 
-    public async Task<ServiceResponse<Article>> CreateArticle(Article article)
+    public async Task<ServiceResponse<Article>> CreateArticle(RegsterArticles article)
     {
+        // _logger.LogInformation(GetUserId().ToString());
         ServiceResponse<Article> serviceResponse = new ServiceResponse<Article>();
-        Article articleToAdd = article;
+        Article articleToAdd = _mapper.Map<Article>(article);
+        articleToAdd.Company = await _context.Companys.FirstOrDefaultAsync(c => c.Id == GetUserId());
         await _context.Articles.AddAsync(articleToAdd);
         await _context.SaveChangesAsync();
         serviceResponse.Data = articleToAdd;
