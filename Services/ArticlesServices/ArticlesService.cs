@@ -35,15 +35,15 @@ public class ArticlesService : IArticlesService
         return serviceResponse;
     }
 
-    public async Task<ServiceResponse<Article>> CreateArticle(RegsterArticles article)
+    public async Task<ServiceResponse<ArticleGetDto>> CreateArticle(RegsterArticles article)
     {
         // _logger.LogInformation(GetUserId().ToString());
-        ServiceResponse<Article> serviceResponse = new ServiceResponse<Article>();
+        ServiceResponse<ArticleGetDto> serviceResponse = new ServiceResponse<ArticleGetDto>();
         Article articleToAdd = _mapper.Map<Article>(article);
         articleToAdd.Company = await _context.Companys.FirstOrDefaultAsync(c => c.Id == GetUserId());
         await _context.Articles.AddAsync(articleToAdd);
         await _context.SaveChangesAsync();
-        serviceResponse.Data = articleToAdd;
+        serviceResponse.Data = _mapper.Map<ArticleGetDto>(articleToAdd);
         return serviceResponse;
     }
     public Task<ServiceResponse<List<Article>>> GetArticles()

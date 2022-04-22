@@ -20,6 +20,9 @@ public class AutoMapperProfile : Profile
         CreateMap<User, UserLoginDto>().ReverseMap();
         CreateMap<History, HistoryGetDto>().ReverseMap();
         CreateMap<Article, RegsterArticles>().ReverseMap();
+        CreateMap<Article, ArticleGetDto>().ReverseMap();
+        CreateMap<User, UserGetDto>().Include<Company,CompanyGetDto>().ReverseMap();
+        CreateMap<Company, CompanyGetDto>().ReverseMap();
     }
     
 }
