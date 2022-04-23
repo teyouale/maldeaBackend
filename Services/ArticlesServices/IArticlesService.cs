@@ -5,7 +5,7 @@ namespace maldeaBackend.Services.ArticlesServices;
 
 public interface IArticlesService           
 {
-    Task<ServiceResponse<List<Article>>> GetAllArticles(int id);
+    Task<ServiceResponse<List<ArticleGetDto>>> GetAllArticles(int id);
     Task<ServiceResponse<ArticleGetDto>> CreateArticle(RegsterArticles article);
     Task<ServiceResponse<List<Article>>> GetArticles();
     Task<ServiceResponse<List<Article>>> updateArticle();

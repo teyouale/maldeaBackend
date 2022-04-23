@@ -5,6 +5,7 @@ using maldeaBackend.Dtos.Article;
 using maldeaBackend.Models;
 using maldeaBackend.Services.ArticlesServices;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace maldeaBackend.Services;
 
@@ -27,11 +28,14 @@ public class ArticlesService : IArticlesService
 
 
     // TODO replace userid -> Newspaper id 
-    public async Task<ServiceResponse<List<Article>>> GetAllArticles(int id)
+    public async Task<ServiceResponse<List<ArticleGetDto>>> GetAllArticles(int id)
     {
-        ServiceResponse<List<Article>> serviceResponse = new ServiceResponse<List<Article>>();
-        List<Article> dbArticles = await _context.Articles.Where(c => c.newspaperID == "1").ToListAsync();
-        serviceResponse.Data = dbArticles;
+        ServiceResponse<List<ArticleGetDto>> serviceResponse = new ServiceResponse<List<ArticleGetDto>>();
+        List<Article> dbArticles =
+            await _context.Articles.Include(c => c.Company).Where(c=> c.Company.Id == id).ToListAsync();
+        // _logger.LogInformation(JsonConvert.SerializeObject(dbArticles));
+        // Mapping list each item to DTO
+        serviceResponse.Data = (dbArticles.Select(c => _mapper.Map<ArticleGetDto>(c))).ToList();
         return serviceResponse;
     }
 
