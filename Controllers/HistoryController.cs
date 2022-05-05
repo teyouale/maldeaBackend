@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace maldeaBackend.Controllers;
 
-[Authorize]
+[Authorize(Roles="user")]
 [ApiController]
 [Route("[controller]")]
 public class HistoryController :ControllerBase
