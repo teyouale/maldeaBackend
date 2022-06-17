@@ -16,4 +16,6 @@ public class DataContext:DbContext
     public DbSet<User> Users { get; set; }
     
     public DbSet<History> History { get; set; }
+    
+    public DbSet<Newspaper> Newspapers { get; set; }
 }

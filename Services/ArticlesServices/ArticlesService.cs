@@ -32,7 +32,7 @@ public class ArticlesService : IArticlesService
     {
         ServiceResponse<List<ArticleGetDto>> serviceResponse = new ServiceResponse<List<ArticleGetDto>>();
         List<Article> dbArticles =
-            await _context.Articles.Include(c => c.Company).Where(c=> c.Company.Id == id).ToListAsync();
+            await _context.Articles.Include(c => c.company).Where(c=> c.company.Id == id).ToListAsync();
         // _logger.LogInformation(JsonConvert.SerializeObject(dbArticles));
         // Mapping list each item to DTO
         serviceResponse.Data = (dbArticles.Select(c => _mapper.Map<ArticleGetDto>(c))).ToList();
@@ -44,7 +44,8 @@ public class ArticlesService : IArticlesService
         // _logger.LogInformation(GetUserId().ToString());
         ServiceResponse<ArticleGetDto> serviceResponse = new ServiceResponse<ArticleGetDto>();
         Article articleToAdd = _mapper.Map<Article>(article);
-        articleToAdd.Company = await _context.Companys.FirstOrDefaultAsync(c => c.Id == GetUserId());
+        articleToAdd.company = await _context.Companys.FirstOrDefaultAsync(c => c.Id == GetUserId());
+        // articleToAdd.newspaper = await _context.Newspapers.FirstOrDefaultAsync(c => c.Id == GetUserId());
         await _context.Articles.AddAsync(articleToAdd);
         await _context.SaveChangesAsync();
         serviceResponse.Data = _mapper.Map<ArticleGetDto>(articleToAdd);

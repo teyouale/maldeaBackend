@@ -2,6 +2,7 @@ using AutoMapper;
 using maldeaBackend.Dtos;
 using maldeaBackend.Dtos.Article;
 using maldeaBackend.Dtos.Company;
+using maldeaBackend.Dtos.Newspaper;
 using maldeaBackend.Models;
 
 namespace maldeaBackend;
@@ -19,10 +20,11 @@ public class AutoMapperProfile : Profile
         CreateMap<Reader, ReaderRegisterDto>().ReverseMap();
         CreateMap<User, UserLoginDto>().ReverseMap();
         CreateMap<History, HistoryGetDto>().ReverseMap();
-        CreateMap<Article, RegsterArticles>().ReverseMap();
-        CreateMap<Article, ArticleGetDto>().ReverseMap();
+        // CreateMap<Article, RegsterArticles>().ReverseMap();
+        // CreateMap<Article, ArticleGetDto>().ReverseMap();
         CreateMap<User, UserGetDto>().Include<Company,CompanyGetDto>().ReverseMap();
         CreateMap<Company, CompanyGetDto>().ReverseMap();
+        CreateMap<Newspaper, CreateNewspaperDto>().ReverseMap();
     }
     
 }

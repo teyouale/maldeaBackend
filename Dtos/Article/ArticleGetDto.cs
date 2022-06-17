@@ -9,6 +9,6 @@ public class ArticleGetDto
     public string subHeading { get; set; }
     public int pageNumber { get; set; }
     public string prority { get; set; }
-    public string newspaperID { get; set; }   
+    // public Newspaper newspaper { get; set; }   
     public CompanyGetDto company { get; set; }
 }
