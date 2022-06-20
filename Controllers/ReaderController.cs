@@ -24,7 +24,7 @@ public class ReaderController:ControllerBase
         return Ok(await  _readerService.GetAllReader());
     }   
     // [Authorize]
-    // [AllowAnonymous]
+    [AllowAnonymous]
     [HttpPost]
     public  async Task<IActionResult> RegisterReader(ReaderDto newreader)
     {

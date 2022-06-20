@@ -12,4 +12,6 @@ public class Company : User
     public string licence { get; set; }
     public string companyDecription { get; set; }
     public string bio { get; set; }
+    public List<Subscription> Subscriptions { get; set; }
+
 }

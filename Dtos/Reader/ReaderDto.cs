@@ -7,8 +7,5 @@ public class ReaderDto:UserDto
         public string lastName { get; set; } = "Tensae";
         public string address { get; set; } ="Tensae";
         public string email { get; set; }="Tensae";
-        // TODO Image Attribute
-        // public string profileImage { get; set; }
-        // TODO  Subscriptions Model
-        // public List<> subscriptions { get; set; } 
+        public List<GetSubscriptionDto> subscriptions { get; set; } 
 }

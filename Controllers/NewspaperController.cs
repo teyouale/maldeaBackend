@@ -25,27 +25,17 @@ public class NewspaperController: ControllerBase
     }
 
     [HttpPost]
-    [Authorize(Roles="company")]
-    public async Task<IActionResult> CreateNewspaper(CreateNewspaperDto createNewspaperDto)
+    
+    public async Task<IActionResult> CreateNewspapers ([FromForm] CreateNewspaperDto createNewspaperDto)
     {
         return Ok(await _newspaperServices.CreateNewspaper(createNewspaperDto));
     }
 
-    public class FileUploadeApi
+    [HttpGet]
+    [Authorize(Roles="company")]
+    public async Task<IActionResult> getNewspaperbyId ()
     {
-        public IFormFile file { get; set; }
+        return Ok(await _newspaperServices.getNewspaperbyID());
     }
-
-    [HttpPost("uplode")]
-    public IActionResult uploadFiles(IFormFile file)
-    {
-        string directoryPath = Path.Combine(_environment.ContentRootPath, "UploadedFiles");
-        string filePath = Path.Combine(directoryPath, file.FileName);
-        using (var stream = new FileStream(filePath, FileMode.Create))
-        {
-            file.CopyTo(stream);
-        }
-
-        return Ok(filePath);
-    }
+   
 }

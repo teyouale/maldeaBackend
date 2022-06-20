@@ -4,6 +4,7 @@ using maldeaBackend.Service;
 using maldeaBackend.Services;
 using maldeaBackend.Services.ArticlesServices;
 using maldeaBackend.Services.NewspaperServices;
+using maldeaBackend.Services.SubscriptionServices;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -79,7 +80,12 @@ builder.Services.AddScoped<IReaderService, ReaderService>();
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<IHistoryService, HistoryService>();
 builder.Services.AddScoped<IArticlesService, ArticlesService>();
+builder.Services.AddScoped<ISubscriptionService, SubscriptionService>();
 builder.Services.AddScoped<INewspaperServices, NewspaperServices>();
+builder.Services.AddControllersWithViews()
+    .AddNewtonsoftJson(options =>
+        options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+    );
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
